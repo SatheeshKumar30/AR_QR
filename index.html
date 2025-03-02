@@ -9,24 +9,40 @@
   <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
     <!-- Marker for tracking -->
     <a-marker type="pattern" url="pattern-qr-code.patt">
-     <a-video 
-  id="videoPlane"
-  position="0 0 0" 
-  rotation="-90 0 0" 
-  width="4" 
-  height="2.25" 
-  src="#videoTexture"
-  autoplay 
-  loop
-  material="shader: flat">
-</a-video>
-
-<video id="videoTexture" src="3D_video.mp4" loop muted crossorigin="anonymous" style="display: none;"></video>
-
-
+      <a-video 
+        id="videoPlane"
+        position="0 0 0" 
+        rotation="-90 0 0" 
+        width="4" 
+        height="2.25" 
+        src="#videoTexture"
+        material="shader: flat">
+      </a-video>
     </a-marker>
-    <!-- Camera to view the scene -->
+
+    <!-- Camera -->
     <a-entity camera></a-entity>
   </a-scene>
+
+  <!-- Hidden video element -->
+  <video id="videoTexture" src="3D_video.mp4" loop muted playsinline crossorigin="anonymous" style="display: none;"></video>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let video = document.getElementById("videoTexture");
+      let marker = document.querySelector("a-marker");
+
+      // Ensure the video is ready
+      video.load();
+
+      marker.addEventListener("markerFound", function () {
+        video.play().catch(error => console.log("Autoplay error:", error));
+      });
+
+      marker.addEventListener("markerLost", function () {
+        video.pause();
+      });
+    });
+  </script>
 </body>
 </html>
