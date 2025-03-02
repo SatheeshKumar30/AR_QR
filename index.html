@@ -9,8 +9,20 @@
   <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
     <!-- Marker for tracking -->
     <a-marker type="pattern" url="pattern-qr-code.patt">
-      <!-- Plane to display the image -->
-      <a-plane id="imagePlane" position="0 0 0" rotation="-90 0 0" width="4" height="2.25" material="shader: flat; scale: 2 2 2; src:capture.jpg"></a-plane>
+     <a-video 
+  id="videoPlane"
+  position="0 0 0" 
+  rotation="-90 0 0" 
+  width="4" 
+  height="2.25" 
+  src="#videoTexture"
+  autoplay 
+  loop
+  material="shader: flat">
+</a-video>
+
+<video id="videoTexture" src="3D video.mp4" loop crossorigin="anonymous" style="display: none;"></video>
+
     </a-marker>
     <!-- Camera to view the scene -->
     <a-entity camera></a-entity>
